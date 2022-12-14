@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<!--
+	Spectral by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Portfolio Projects</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="profileproject2.html"><FONT style="color:white">Portfolio Projects</FONT></a></h1>
+						<nav id="nav">
+							<ul>
+								<li class="special">
+									<a href="#menu" class="menuToggle"><span><FONT style="color:white">Menu</FONT></span></a>
+									<div id="menu">
+										<ul>
+											<li><a href="index.html">Home</a></li>
+											<li><a href="About.html">about</a></li>
+											<li><a href="Portfolio_Project.html">Portfolio Project-Sales Management</a></li>
+											<li><a href="ProfileProject3.html">Project-PPP Analysis</a></li>
+											<li><a href="ProfileProject4.html">Project- Football winner Model</a></li>
+
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					
+				<article id="main">
+					<header class="major">
+							<div class="inner">
+								<h3>Redouan Merroun <br> Portfolio</h3>
+								<br>
+									<p><FONT size="2pt">Data Analyst well versed in Excel, SQL, R, Tableau, Power BI.</FONT>
+								
+								</p>
+	
+							<ul>
+								<a href="#one" class="more scrolly">More Projects</a>
+							</ul>
+							</div>
+						</header>
+						
+						<section class="wrapper style5">
+							<div class="inner">
+
+								<section>
+									<h2>Data Analyst Portfolio Project<b><br> Cohort Retention Analysis</b></h2>
+									<h4>BUSINESS REQUEST & USER STORIES</h4>
+									<p>The business request for this data analyst project was retention-based analysis report for marketing and sales managers, in order to provide in-depth insights into user behavior as well as website performance.
+                                        Based on the request that was made from the business we following user stories were defined to fulfill delivery and ensure that acceptance criteria’s were maintained throughout the project.</p>
+									<hr />
+
+									<section>
+									
+										<div class="table-wrapper">
+											<table>
+												<thead>
+													<tr>
+														<th>Role</th>
+														<th>Reqeust/demand</th>
+														<th>User value</th>
+														<th>Acceptance Criteria</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Marketing Manager</td>
+														<td>To get a dashboard Cohort Retention</td>
+														<td>Gauge whether or not the quality of the average customer is improving throughout the customer lifecycle</td>
+														<td>
+															A Tableau dashboard which updates data once a month
+														</td>
+													</tr>
+													<tr>
+														<td>Sales Manager</td>
+														<td>A detailed overview of cohort retention rate by time</td>
+														<td>Can help reducing early customer churn</td>
+														<td>A Tableau dashboard which allows me to See cohort retention rate by each period of time</td>
+													</tr>
+													
+												</tbody>
+												<tfoot>
+													<tr>
+														<td colspan="2"></td>
+														
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+
+
+
+
+
+
+
+
+
+
+									<header>
+										<h4>Data Cleansing & Transformation (SQL)</h4>
+										
+									</header>
+									<p>To create the necessary data model for doing analysis and fulfilling the business needs defined in the user stories the following tables were extracted using SQL.
+										One data source (online_retail) were provided in Excel format and were connected in the data model in a later step of the process
+										
+										Below are the SQL statements for cleansing and transforming necessary data.<br>
+										<pre><code>
+-- Cleaning Data
+SELECT  * FROM online_retail..Online_Retail
+WHERE CustomerID IS NULL
+-->  135080 Records from 541909 have no customer ID
+WITH onlineretail AS (
+SELECT  * FROM online_retail..Online_Retail
+WHERE CustomerID IS NOT NULL
+)
+, Quantity_price as(
+
+-- 397882 records with quantity and price
+SELECT * FROM onlineretail
+WHERE Quantity > 0 AND UnitPrice > 0
+)
+, dup_check AS (
+-- Duplicate check
+SELECT * ,ROW_NUMBER() OVER (PARTITION BY InvoiceNo, StockCode, Quantity ORDER BY InvoiceDate) AS dup_flag
+FROM Quantity_price
+)
+-- 392669 Clean data
+-- 5215 duplicate records
+SELECT *
+INTO online_retail
+FROM dup_check
+WHERE dup_flag = 1
+										</code></pre>
+
+										<h4>Create Cohort Group, Cohort Index</h4><br>
+<p>To create cohort table, we need to know the unique identifier and the initial Start Date, and data. in our case:<br>
+	. The unique identifier: CustomerID<br>
+	. The initial Start Date : First Invoice Date<br>
+	. Data: Revenue Date.<br>
+</p>
+<p>The Cohort index in this project is representing the number of months that passed since the customers's First Purchase</p>
+<h4>Create Cohort Table in SQL</h4>
+<p>Below are the SQL statements to create cohort table</p>
+									<pre><code>
+SELECT CustomerID,
+MIN(InvoiceDate) first_purchase_date,
+DATEFROMPARTS(year(MIN(InvoiceDate)), month(MIN(InvoiceDate)), 1) Cohort_Date
+INTO cohort
+FROM online_retail
+GROUP BY CustomerID
+								
+SELECT * FROM cohort
+</code></pre>
+
+<h4>Create Cohort Retention Rate in SQL</h4>
+<p>Below are the SQL statements to create cohort Retention table</p>
+<pre><code>
+SELECT
+mmm.*,
+cohort_index = year_diff * 12 + month_diff + 1
+INTO cohort_retention
+ FROM
+(
+  
+	SELECT
+		mm.*,
+		year_diff = Invoice_year - Cohort_year,
+		month_diff = Invoice_month - Cohort_month
+	FROM
+		(SELECT 
+			r.*,
+			c.Cohort_Date,
+			YEAR(r.InvoiceDate) Invoice_year,
+			MONTH(r.InvoiceDate) Invoice_month,
+			YEAR(c.Cohort_Date) Cohort_year,
+			MONTH(c.Cohort_Date) Cohort_month
+		FROM  online_retail as r
+		LEFT JOIN cohort c
+			ON r.CustomerID = c.CustomerID
+		) mm
+	) mmm
+  
+  
+  
+SELECT * FROM cohort_retention
+  
+-- Pivot Data to see the cohort retention table
+SELECT * 
+INTO cohort_pivot
+FROM(
+	SELECT distinct
+	 CustomerID,
+	 Cohort_date,
+	 cohort_index
+	FROM cohort_retention
+  )tbl
+  pivot(
+	  COUNT(CustomerID)
+	  FOR cohort_index IN
+		  (
+		  [1],
+		  [2],
+		  [3],
+		  [4],
+		  [5],
+		  [6],
+		  [7],
+		  [8],
+		  [9],
+		  [10],
+		  [11],
+		  [12],
+		  [13])
+  ) as pivot_table
+  
+  
+SELECT * FROM cohort_pivot
+ORDER BY Cohort_date
+  
+-- Pivot Data to see the cohort retention rate table
+SELECT Cohort_date, 
+	1.0 *[1]/[1] * 100 AS [1], 
+	1.0 *[2]/[1] * 100 AS [2],
+	1.0 *[3]/[1] * 100 AS [3], 
+	1.0 *[4]/[1] * 100 AS [4],
+	1.0 *[5]/[1] * 100 AS [5], 
+	1.0 *[6]/[1] * 100 AS [6],
+	1.0 *[7]/[1] * 100 AS [7], 
+	1.0 *[8]/[1] * 100 AS [8],
+	1.0 *[9]/[1] * 100 AS [9], 
+	1.0 *[10]/[1] * 100 AS [10],
+	1.0 *[11]/[1] * 100 AS [11], 
+	1.0 *[12]/[1] * 100 AS [12],
+	1.0 *[13]/[1] * 100 AS [13]
+FROM cohort_pivot
+ORDER BY Cohort_date
+
+
+</code></pre>
+
+
+
+
+
+
+<h4>Creating Cohort Retention Rate Dashboard</h4>
+<p>The finished Cohort Retention Analysis dashboard with one page with works as a dashboard and overview, with two other pages focused on combining tables for necessary details and visualizations to show number of months that passed since the customer s first engagement.
+	<br><b>Click the picture to to open the dashboard and try it out!</b>
+	<div class="row gtr-50 gtr-uniform">
+		<div class="col-12"><span class="image fit"><a href="https://public.tableau.com/app/profile/redouan4374/viz/OnlineRetailCohortRetentionDahboard/CohortRetentionDashboard"><img src="images\cohort_dash.jpg" alt="" /></a></span></div>
+</p>
+
+									</section>
+
+
+
+
+				<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands fa fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						<li><a href="#" class="icon brands fa fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>Redouan Merroun - Data Analyst</li>
+					</ul>
+				</footer>
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

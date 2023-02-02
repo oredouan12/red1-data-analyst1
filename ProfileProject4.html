@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<!--
+	Spectral by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Portfolio Projects</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="ProfileProject4.html"><FONT style="color:white">Portfolio Projects</FONT></a></h1>
+						<nav id="nav">
+							<ul>
+								<li class="special">
+									<a href="#menu" class="menuToggle"><span><FONT style="color:white">Menu</FONT></span></a>
+									<div id="menu">
+										<ul>
+											<li><a href="index.html">Home</a></li>
+											<li><a href="About.html">about</a></li>
+											<li><a href="Portfolio_Project.html">Portfolio Project-Sales Management</a></li>
+											<li><a href="profileproject2.html">Project-Cohort Analysis</a></li>
+											<li><a href="ProfileProject3.html">Project-PPP Analysis</a></li>
+
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					
+				<article id="main">
+					<header class="major">
+							<div class="inner">
+								<h3>Redouan Merroun <br> Portfolio</h3>
+								<br>
+									<p><FONT size="2pt">Data Analyst well versed in Excel, SQL, R, Tableau, Power BI.</FONT>
+								
+								</p>
+	
+							<ul>
+								<a href="#one" class="more scrolly">More Projects</a>
+							</ul>
+							</div>
+						</header>
+						
+						<section class="wrapper style5">
+							<div class="inner">
+
+								<section>
+									<h2>Qatar Football world cup winner predition Model</h2><br> <h4> using simple Poission Distribution</h4>
+									<h4>Introduction & User Story</h4>
+									<p> This Project is showing the probability of teams scoring goals against each other by using the Poisson Distribution and the 3 first rounds of 2022 Qatar Football World Cup dataset, which is more accurate, with the Poisson distribution. This Project explains in-depth the Poisson distribution and models the probability of Each Qualified Team scoring each other using the Poisson Distribution based on the real dataset of the 3 first rounds of 2022 Qatar Football World.<br>
+                                    <h4>Objectives</h4>
+1- Calculate the probability of scoreline between the remaining teams in 2022 football world cup starting from Round16, and use it to calculate match odds(Home/Draw/Away).<br>
+2- Making more Well-informed football prediction and help find the qualified team from each round of World Cup.<br>
+<br>
+                                    <h4>What is Poission Distribution</h4>
+1- Developed by 19th-century French Matematician Simeon Denis Poisson.<br>
+2- It is a probability theory that uses historical sports data to predict the outcomes of sports event. It measures the likelihood of how many times an event will occur during a specific period.<br>
+3- Poisson distribution can help you predict how likely each number of goals scored is.<br>
+<br>
+<h4>Why use Poisson Distribution?</h4>
+1 - As a morocccan citizen and big fun of football, the moroccan team is already qualified and it is important to know how likely any event is, based on past performance.<br>
+
+2- Poisson Distribution in predicting the winner is particulary relevant for games like football, where scoring happens on an incremental scale. it helps you determine the likelihood of each possible score.<br><br>
+</p>                               
+<h4>Using simple Poission Distribution to predict Qatar World Cup Winner </h4>
+<p>One of the most common uses of Poisson Distribution: Calculating Football Results:<br>
+
+If you want to calculate the likelihood of a specific score in football, as well as a win, lose or draw, You need to first calculate the average goal expectancy, as well as the attack strenght, and defence strenght for both sides of the event.<br><br>
+Each Team goal expectancy depends on its attack strenght and defence strenght, and as well as the opposite team's Attack strenght and defence strenght.<br><br>
+<img src="images/Total Goals Scored and conceded.jpg">
+
+<h5>Calculating Attack Strenght:</h5>
+With these results, we can calculate attack strenght for home and away team. Attack Streaght is the team's average number of goals, divided by the world cup first 3 rounds's average number of goals.<br>
+<h5>Calculating Defence Strenght:</h5>
+Calculating Defence Strenght is just as easy. Simply divide the team's average number of goals conceded by the world cup first 3 rounds's average number of goals conceded.<br>
+Here is the results:<br>
+<img src="images/attack and defence strenght.jpg">
+
+<h5>Calculating Goal Expactancy:</h5>
+
+Let's take first match on round16 (Netherland VS USA) As an example)<br>
+To determine how many goals Netherland will likely score, we need to multiply Netherland's Attack Strenght by USA's Defence Strenght and the world cup first 3 rounds's avenrage number of goals.<br>
+
+that gives 1.32231405*0.26446281*1.260416667=0.44077135<br><br>
+
+To determine how many goals usa will likely score, we need to multiply usa attack strengh by Netherland defence strengh and world cup first 3 rounds's avenrage number of goals.<br>
+
+That gives : 0.52892562*0.26446281*1.260416667=0.17630854<br><br>
+<img src="images/expectency.jpg"><br><br><br>
+
+<h5>The poisson Distribution Formula:</h5>
+
+In its shortest form, the distribution of the number of independent events occurring in a certain interval (this interval can be time, goals, area, volume, etc.) is the Poisson distribution. For example, the number of goals in one match or event, chickens in a square meter plot of land, the number of fires in X region in 3 months, etc. Before continuing with these examples, let’s take a look at the theoretical background of the subject:<br>
+<img src="images/ppoisson formula.jpg"><br><br>
+
+In this formula:<br>
+P is the probability<br>
+K is the number of occurrences in the interval(number of goals)<br>
+ⲗ Lambda is the expected number of goals<br>
+e is Eurler's number(e=2.71828..)<br>
+K! is the factorial of know.<br><br>
+Of course, no game ends 1.23 vs 0.997 - this is simply the average. Poisson Distribution allows us to use these figures to distribute 100% of probability accross a range of goal outcomes for each side.
+<h5>Using Poisson Dist Function in excel</h5>
+To determine the prediction of number score for each, i used poission dist function in excel:
+Example(Netherland VS USA):
+<img src="images/poisson results.jpg"><br><br>
+<b>POISSON.DIST(number of goals[0 or 1 or 2...],Team's Goal expectency, False)</b><br>
+<h5>Predicting a match outcome based on these probabilities</h5>
+To get each possible score, i simply multiply the probability of each possible score by each team by the probability of each possible score by the other team. that gives the following distribution:
+<br>
+<img src="images/tableau.jpg"><br><br>
+<h5>The chance of winning table for each match</h5><br>
+. To calculate the chance of an Netherland win, we add the blue squares from the table above: that gives us an estimated chance of 31%.<br>
+. To calculate the chance of a usa win, we add the green squares from the table abpve: that gives as an estimated chance of 11%.<br>
+. To calculate the chance of draw, we add all the brown squares from table above<br>
+<br><br>
+<img src="images/chances.jpg"><br><br>
+
+<h5>Results</h5>
+The Predictions were based on last 3 matchs for each team in the current Football Wold cup (Qatar 2022 World Cup), and also i removed all draws results because the coming matchs in worldcup must have a winner team.
+So, as a result of using this model on predicting every match winner, the winner of the Qatar Football World Cup is may be <b>SPAIN</b>, and below are prediction of all matches from round16 to the final:<br>
+<img src="images/wordl caup map (2).jpg"><br><br><br><br>
+<h5>Summary</h5>
+
+. This is just a very simple way to calculate Odds.<br>
+. Gives you a solid starting point for coming up with logical football predictions.<br>
+. the more data you add into model, the more accurate it could be.<br>
+</p>
+For more Details about the Data Used and model that was made in this project seel below:<br>
+<ul class="actions stacked">
+    <li><a href="images/fifa-world-cup-2022-fixture-beta.xlsx" class="button fit primary">Dataset</a></li>
+    <li><a href="images/fifa-world-cup-2022-winning prediction.xlsx" class="button fit">P.Dist Prediction model</a></li>
+</ul>
+
+									</section>
+
+
+
+
+				<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="https://www.linkedin.com/in/red1-merroun-3743b27/" class="icon brands fa fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						<li><a href="#" class="icon brands fa fa-github"><span class="label">Github</span></a></li>
+						<li><a href="mailto:red1.data.analyst@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>Redouan Merroun - Data Analyst</li>
+					</ul>
+				</footer>
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
